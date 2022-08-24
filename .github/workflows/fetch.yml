@@ -1,0 +1,29 @@
+name: Fetch exchange rates
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
+
+env:
+  APP_ID: ${{ secrets.APP_ID }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch JSON
+        run: curl -X GET "https://openexchangerates.org/api/latest.json?app_id=${{ secrets.APP_ID }}" --output rates.json
+
+      - name: Push into Git
+        run: |-
+          git config --global user.email "bot@ark-builders.dev"
+          git config --global user.name "ARK Builders Bot"
+          git add rates.json
+          git commit -m "Automated update of rates JSON"
+          git push
