@@ -21,7 +21,7 @@ jobs:
         run: curl -X GET "https://openexchangerates.org/api/latest.json?app_id=${{ secrets.APP_ID }}" --output fiat-rates.json
         
       - name: Fetch crypto       
-        run: curl -X GET "https://api.binance.com/api/v3/ticker/price" --output crypto-rates.json
+        run: curl -X GET "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd" --output crypto-rates.json
 
       - name: Push into Git
         run: |-
