@@ -99,7 +99,7 @@ def reduce_data(full_rates_file, crypto_file, output_file):
     # Filter out items where 'current_price' is None or missing
     filtered_data = [item for item in new_data if item.get('current_price') is not None]
 
-    sorted_data = sorted(new_data, key=lambda x: x['current_price'], reverse=True)
+    sorted_data = sorted(filtered_data, key=lambda x: x['current_price'], reverse=True)
 
     # Save the reduced data to the output file
     with open(output_file, "w", encoding="utf-8") as f:
