@@ -1,0 +1,39 @@
+name: Fetch Rates - uses Python
+
+on:
+  schedule:
+    - cron: "0 0,8,16 * * *"
+  workflow_dispatch:
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests
+          
+      - name: Run fetch_rates script
+        run: python fetch_rates.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "bot@ark-builders.dev"
+          git config --global user.name "ARK Builders Bot"
+          git add full_rates.json
+          git commit -m "Automated update of coin rates by Python Script." || echo "No changes to commit"
+          git pull --rebase origin main
+          git push
