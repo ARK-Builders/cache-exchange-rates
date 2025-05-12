@@ -97,7 +97,7 @@ def reduce_data(full_rates_file, crypto_file, output_file):
     print(f"Filtered data contains {len(new_data)} unique items.")
 
     # Sort the data by symbol
-    sorted_data = sorted(new_data, key=lambda x: x['symbol'])
+    sorted_data = sorted(new_data, key=lambda x: x['current_price'], reverse=True)
 
     # Save the reduced data to the output file
     with open(output_file, "w", encoding="utf-8") as f:
