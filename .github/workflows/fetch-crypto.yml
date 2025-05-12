@@ -27,7 +27,7 @@ jobs:
           pip install requests
           
       - name: Run fetch_rates script
-        run: python fetch_rates.py
+        run: python fetch-rates.py
 
       - name: Commit and push changes
         run: |
