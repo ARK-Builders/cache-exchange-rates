@@ -79,14 +79,14 @@ def reduce_data(full_rates_file, crypto_file, output_file):
 
     symbols_set = set()
 
-    with open(crypto_file, "r", encoding="utf-8") as f:
-        crypto_data = json.load(f)
+    #with open(crypto_file, "r", encoding="utf-8") as f:
+    #    crypto_data = json.load(f)
 
-    crypto_ids = [key.lower() for key in crypto_data.keys()]
+    #crypto_ids = [key.lower() for key in crypto_data.keys()]
 
     # Keep only the desired keys and filter out duplicates as well as ones in the master crypto list
     for item in data:
-        if item['symbol'] not in symbols_set and item['symbol'] in crypto_ids:
+        if item['symbol'] not in symbols_set:# and item['symbol'] in crypto_ids:
             item_filtered = {key: item[key] for key in keys_to_keep if key in item}
             new_data.append(item_filtered)
             symbols_set.add(item['symbol'])
