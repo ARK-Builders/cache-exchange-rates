@@ -1,4 +1,4 @@
-name: Fetch exchange rates
+name: Fetch Fiat Exchange Rates - Uses cURL
 
 on:
   push:
