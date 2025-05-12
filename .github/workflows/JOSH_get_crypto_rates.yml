@@ -33,7 +33,7 @@ jobs:
         run: |
           git config --global user.email "bot@ark-builders.dev"
           git config --global user.name "ARK Builders Bot"
-          git add full_rates.json
+          git add full_crypto_rates.json
           git commit -m "Automated update of coin rates by Python Script." || echo "No changes to commit"
           git pull --rebase origin main
           git push
