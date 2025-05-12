@@ -30,4 +30,5 @@ jobs:
           git add fiat-rates.json
           #git add crypto-rates.json
           git commit -m "Automated update of rates"
+          git pull --rebase origin main
           git push
