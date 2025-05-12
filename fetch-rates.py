@@ -103,7 +103,7 @@ def reduce_data(full_rates_file, crypto_file, output_file):
 
     # Save the reduced data to the output file
     with open(output_file, "w", encoding="utf-8") as f:
-        json.dump(sorted_data, f)
+        json.dump(filtered_data, f)
     print(f"Reduced data saved to {output_file}")
 
 def main():
