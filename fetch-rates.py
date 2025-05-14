@@ -112,8 +112,7 @@ def main():
 
     # Step 2: Reduce the merged data based on crypto.json content.
     # The merged file from the API is used as the full rates file.
-    reduce_data("all_rates.json", "crypto.json", "crypto-rates.json")
-    os.remove("all_rates.json")
+    reduce_data("all_rates_from_API.json", "crypto.json", "crypto-rates-JW.json")
 
 if __name__ == "__main__":
     main()
