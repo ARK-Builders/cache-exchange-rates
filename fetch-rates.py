@@ -76,7 +76,7 @@ def reduce_data():
             #print(f"Duplicate found: {item['symbol']}")
             continue
 
-    top_1000_filtered_data = [item for item in new_data if item['market_cap_rank'] is not None and item['market_cap_rank'] <= 1000]
+    top_1000_filtered_data = new_data[:1001]
 
     with open(output_file_top_1000, "w", encoding="utf-8") as f:
         json.dump(top_1000_filtered_data, f)
