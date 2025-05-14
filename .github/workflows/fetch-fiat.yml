@@ -29,12 +29,6 @@ jobs:
           git config --global user.name "ARK Builders Bot"
           git add fiat-rates.json
           git add crypto-rates.json
-
-          
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Automated update of rates"
-            git pull --rebase origin main
-            git push
-          fi    
+          git commit -m "Automated update of rates"
+          git pull --rebase origin main
+          git push
