@@ -19,7 +19,7 @@ jobs:
       - name: Checkout target branch
         uses: actions/checkout@v4
         with:
-          ref: joshwhittick-patch-1
+          ref: joshwhittick-patch-1-1
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch fiat
@@ -40,6 +40,6 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Automated update of fiat and crypto rates"
-            git pull --rebase origin joshwhittick-patch-1
-            git push origin joshwhittick-patch-1
+            git pull --rebase origin joshwhittick-patch-1-1
+            git push origin joshwhittick-patch-1-1
           fi
