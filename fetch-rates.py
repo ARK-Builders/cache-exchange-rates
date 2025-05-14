@@ -60,16 +60,7 @@ def fetch_all_data():
     print(f"Merged data saved to {output_file}")
 
 def reduce_data(full_rates_file, crypto_file, output_file):
-    """
-    Reads the full data file and reduces its content by:
-    
-     - Keeping only certain keys: id, symbol, name, current_price.
-     - Removing duplicate items.
-     - Filtering out items whose id is not in the list provided from crypto.json.
-     - Sorting the remaining items by their symbol.
-     
-    The final reduced data is written to the specified output file.
-    """
+
     # Load the full rates data
     with open(full_rates_file, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -86,7 +77,7 @@ def reduce_data(full_rates_file, crypto_file, output_file):
 
     # Keep only the desired keys and filter out duplicates as well as ones in the master crypto list
     for item in data:
-        if item['symbol'] not in symbols_set:# and item['symbol'] in crypto_ids:
+        if item['symbol'] not in symbols_set and item['symbol'] in crypto_ids:
             item_filtered = {key: item[key] for key in keys_to_keep if key in item}
             new_data.append(item_filtered)
             symbols_set.add(item['symbol'])
