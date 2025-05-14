@@ -58,14 +58,15 @@ def reduce_data():
     with open(full_rates_file, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    new_data = []
-    keys_to_keep = ["id", "symbol", "name", "current_price", "market_cap", "market_cap_rank"]
-    symbols_set = set()
-
     with open(crypto_file, "r", encoding="utf-8") as f:
         crypto_data = json.load(f)
 
     crypto_ids = [key.lower() for key in crypto_data.keys()]
+
+    keys_to_keep = ["id", "symbol", "name", "current_price", "market_cap", "market_cap_rank"]
+    
+    new_data = []
+    symbols_set = set()
 
     for item in data:
         if item['symbol'] not in symbols_set and item['symbol'] in crypto_ids:
@@ -76,7 +77,19 @@ def reduce_data():
             #print(f"Duplicate found: {item['symbol']}")
             continue
 
-    top_1000_filtered_data = new_data[:1001]
+    top_1000_filtered_data = []
+    top_1000_symbols_set = set()
+    
+    for item in data:
+        if item['symbol'] not in top_1000_symbols_set:
+            item_filtered = {key: item[key] for key in keys_to_keep if key in item}
+            top_1000_filtered_data.append(item_filtered)
+            top_1000_symbols_set.add(item['symbol'])
+        else:
+            #print(f"Duplicate found: {item['symbol']}")
+            continue
+
+    top_1000_filtered_data = top_1000_filtered_data[:1001]
 
     with open(output_file_top_1000, "w", encoding="utf-8") as f:
         json.dump(top_1000_filtered_data, f)
