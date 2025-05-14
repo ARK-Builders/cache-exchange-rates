@@ -37,6 +37,7 @@ jobs:
           git config --global user.name "ARK Builders Bot"
           git add crypto-rates-JW.json
           git add all_rates_from_API.json
+          git add top_1000_crypto-rates-JW.json
           git commit -m "Automated update of coin rates by Python Script." || echo "No changes to commit"
           git pull --rebase origin joshwhittick-patch-1-1
           git push origin joshwhittick-patch-1-1
