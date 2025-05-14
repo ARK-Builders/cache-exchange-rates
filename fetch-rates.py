@@ -38,7 +38,7 @@ def fetch_all_data():
     Ensures that all expected page files (1 to 69) exist by attempting to fetch
     any missing pages. Then merges all individual page data files into a single file.
     """
-    output_file = "all_rates.json"
+    output_file = "all_rates_from_API.json"
     data_dir = "coin_data"
     os.makedirs(data_dir, exist_ok=True)
 
