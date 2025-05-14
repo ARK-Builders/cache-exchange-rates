@@ -1,8 +1,8 @@
 name: Fetch Crypto Rates - uses Python
 
 on:
-  #schedule:
-    #- cron: "0 0,8,16 * * *"
+  schedule:
+    - cron: "0 0,8,16 * * *"
   workflow_dispatch:
 
 jobs:
@@ -14,7 +14,9 @@ jobs:
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: joshwhittick-patch-1-1
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -35,5 +37,5 @@ jobs:
           git config --global user.name "ARK Builders Bot"
           git add crypto-rates.json
           git commit -m "Automated update of coin rates by Python Script." || echo "No changes to commit"
-          git pull --rebase origin main
-          git push
+          git pull --rebase origin joshwhittick-patch-1-1
+          git push origin joshwhittick-patch-1-1
