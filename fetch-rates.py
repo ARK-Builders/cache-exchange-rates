@@ -3,11 +3,12 @@ import json
 import requests
 import time
 
-full_rates_file = "all_rates_from_API.json"
 crypto_file = "crypto.json"
-output_file = "crypto-rates-JW.json"
-output_file_top_1000 = "top_1000_crypto-rates-JW.json"
+output_file = "crypto-rates.json"
+
 data_dir = "coin_data"
+full_rates_file = "all_rates_from_API.json"
+
 
 def fetch_and_save_data(page_number):
     print(f"Fetching page {page_number}...")
@@ -69,6 +70,7 @@ def reduce_data():
     symbols_set = set()
 
     for item in data:
+        # if item['symbol'] not in symbols_set
         if item['symbol'] not in symbols_set and item['symbol'] in crypto_ids:
             item_filtered = {key: item[key] for key in keys_to_keep if key in item}
             new_data.append(item_filtered)
@@ -77,23 +79,7 @@ def reduce_data():
             #print(f"Duplicate found: {item['symbol']}")
             continue
 
-    top_1000_filtered_data = []
-    top_1000_symbols_set = set()
-    
-    for item in data:
-        if item['symbol'] not in top_1000_symbols_set:
-            item_filtered = {key: item[key] for key in keys_to_keep if key in item}
-            top_1000_filtered_data.append(item_filtered)
-            top_1000_symbols_set.add(item['symbol'])
-        else:
-            #print(f"Duplicate found: {item['symbol']}")
-            continue
-
-    top_1000_filtered_data = top_1000_filtered_data[:1001]
-
-    with open(output_file_top_1000, "w", encoding="utf-8") as f:
-        json.dump(top_1000_filtered_data, f)
-
+    # new_data = new_data[:1001]
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(new_data, f)
 
