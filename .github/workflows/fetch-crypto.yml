@@ -16,7 +16,7 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v4
         with:
-          ref: joshwhittick-patch-1-1
+          ref: joshwhittick-patch
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -28,16 +28,14 @@ jobs:
           pip install --upgrade pip
           pip install requests
           
-      - name: Run fetch_rates script
+      - name: Run fetch-rates.py script
         run: python fetch-rates.py
 
       - name: Commit and push changes
         run: |
           git config --global user.email "bot@ark-builders.dev"
           git config --global user.name "ARK Builders Bot"
-          git add crypto-rates-JW.json
-          git add all_rates_from_API.json
-          git add top_1000_crypto-rates-JW.json
+          git add crypto-rates.json
           git commit -m "Automated update of coin rates by Python Script." || echo "No changes to commit"
-          git pull --rebase origin joshwhittick-patch-1-1
-          git push origin joshwhittick-patch-1-1
+          git pull --rebase origin joshwhittick-patch
+          git push origin joshwhittick-patch
