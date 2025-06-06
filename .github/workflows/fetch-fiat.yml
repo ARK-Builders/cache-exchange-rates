@@ -1,8 +1,6 @@
 name: Fetch Fiat Rates - uses cURL
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
   schedule:
     - cron: "0 0,8,16 * * *"
@@ -10,31 +8,38 @@ on:
 env:
   APP_ID: ${{ secrets.APP_ID }}
 
+permissions:
+  contents: write  # Required to push changes
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: joshwhittick-patch
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch fiat
         run: curl -X GET "https://openexchangerates.org/api/latest.json?app_id=${{ secrets.APP_ID }}" --output fiat-rates.json
-        
-      - name: Fetch crypto       
-        run: curl -X GET "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd" --output crypto-rates.json
 
-      - name: Push into Git
+      #- name: Fetch crypto       
+       # run: curl -X GET "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd" --output crypto-rates.json
+
+      - name: Commit and push changes
         run: |-
           git config --global user.email "bot@ark-builders.dev"
           git config --global user.name "ARK Builders Bot"
-          git add fiat-rates.json
-          git add crypto-rates.json
 
-          
+          git add fiat-rates.json
+          #git add crypto-rates.json
+
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Automated update of rates"
-            git pull --rebase origin main
-            git push
-          fi    
+            git commit -m "Automated update of fiat and crypto rates"
+            git pull --rebase origin joshwhittick-patch
+            git push origin joshwhittick-patch
+          fi
