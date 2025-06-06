@@ -1,9 +1,9 @@
 name: Fetch Crypto Rates - uses Python
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 8 * * *"
-  workflow_dispatch:
 
 jobs:
   fetch-and-commit:

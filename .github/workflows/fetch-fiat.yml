@@ -3,7 +3,7 @@ name: Fetch Fiat Rates - uses cURL
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"  # Runs every day at 00:00 UTC
+    - cron: "0 8 * * *"
 
 env:
   APP_ID: ${{ secrets.APP_ID }}
