@@ -3,7 +3,7 @@ name: Fetch Fiat Rates - uses cURL
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0,8,16 * * *"
+    - cron: "0 0,8,16 * * *"  # Every 8 hours
 
 env:
   APP_ID: ${{ secrets.APP_ID }}
@@ -16,16 +16,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout target branch
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: joshwhittick-patch
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch fiat
         run: curl -X GET "https://openexchangerates.org/api/latest.json?app_id=${{ secrets.APP_ID }}" --output fiat-rates.json
 
-      #- name: Fetch crypto       
+      #- name: Fetch crypto
        # run: curl -X GET "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd" --output crypto-rates.json
 
       - name: Commit and push changes
@@ -40,6 +40,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Automated update of fiat and crypto rates"
-            git pull --rebase origin joshwhittick-patch
-            git push origin joshwhittick-patch
-          fi
+            git pull --rebase origin main
+            git push origin main
