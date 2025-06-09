@@ -42,3 +42,4 @@ jobs:
             git commit -m "Automated update of fiat and crypto rates"
             git pull --rebase origin main
             git push origin main
+          fi
